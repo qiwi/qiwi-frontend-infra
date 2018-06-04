@@ -1,0 +1,41 @@
+{
+  "name": "@qiwi/neutrino-preset-frontend-infra",
+  "version": "1.0.1-beta.0",
+  "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-preset-frontend-infra",
+  "author": "Oleg Orlov <o.orlov@qiwi.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "install": "node ./bin/install",
+    "uninstall": "node ./bin/uninstall"
+  },
+  "dependencies": {
+    "@neutrinojs/compile-loader": "^8.2.3",
+    "@neutrinojs/eslint": "8.2.3",
+    "@neutrinojs/loader-merge": "^8.2.3",
+    "@neutrinojs/node": "^8.2.3",
+    "@neutrinojs/react": "^8.2.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "deepmerge": "^2.1.1",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-standard": "11.0.0",
+    "eslint-plugin-import": "2.12.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
+    "eslint-plugin-node": "6.0.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-promise": "3.8.0",
+    "eslint-plugin-react": "7.9.1",
+    "eslint-plugin-security": "1.4.0",
+    "eslint-plugin-standard": "3.1.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.1.3",
+    "prettier": "^1.13.4"
+  },
+  "peerDependencies": {
+    "neutrino": "^8.0.0"
+  }
+}

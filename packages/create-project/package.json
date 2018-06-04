@@ -1,0 +1,47 @@
+{
+  "name": "@qiwi/create-project",
+  "version": "1.0.1-beta.0",
+  "description": "Scaffold new QIWI projects with a CLI helper",
+  "bin": {
+    "create-project": "./bin/create-project.js"
+  },
+  "scripts": {
+    "start": "./bin/create-project init"
+  },
+  "files": [
+    "bin",
+    "commands"
+  ],
+  "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/create-project",
+  "author": "Oleg Orlov <o.orlov@qiwi.com>",
+  "license": "MIT",
+  "keywords": [
+    "qiwi",
+    "neutrino",
+    "create",
+    "project",
+    "app",
+    "library",
+    "react",
+    "node"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5.4.0",
+    "yarn": ">=1.2.1"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "command-exists": "^1.2.2",
+    "deepmerge": "^2.1.1",
+    "fs-extra": "^6.0.1",
+    "javascript-stringify": "^1.6.0",
+    "ramda": "^0.25.0",
+    "yargs": "^11.0.0",
+    "yeoman-environment": "^2.2.0",
+    "yeoman-generator": "^2.0.5"
+  }
+}

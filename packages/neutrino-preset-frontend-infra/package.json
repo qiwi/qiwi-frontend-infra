@@ -1,6 +1,6 @@
 {
   "name": "@qiwi/neutrino-preset-frontend-infra",
-  "version": "1.0.1-beta.0",
+  "version": "1.0.1",
   "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-preset-frontend-infra",
   "author": "Oleg Orlov <o.orlov@qiwi.com>",
   "license": "MIT",

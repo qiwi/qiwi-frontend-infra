@@ -1,6 +1,6 @@
 {
   "name": "@qiwi/create-project",
-  "version": "1.0.1-beta.0",
+  "version": "1.0.1",
   "description": "Scaffold new QIWI projects with a CLI helper",
   "bin": {
     "create-project": "./bin/create-project.js"

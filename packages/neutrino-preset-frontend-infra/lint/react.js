@@ -8,6 +8,7 @@ module.exports = (neutrino, options) => {
     },
     envs: ['browser', 'worker', 'serviceworker'],
     rules: {
+      'no-console': process.env.NODE_ENV === 'development' ? 'off' : 'error',
       'class-methods-use-this': 'off',
 
       // react plugin

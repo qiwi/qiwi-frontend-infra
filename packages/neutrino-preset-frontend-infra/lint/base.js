@@ -38,7 +38,6 @@ module.exports = (neutrino, options) => {
         'func-name-matching': 'error',
         'no-useless-return': 'error',
         'consistent-return': 'error',
-        'multiline-ternary': ['error', 'never'],
         'no-nested-ternary': 'error',
         'block-scoped-var': 'error',
         'global-require': 'error',
@@ -62,7 +61,6 @@ module.exports = (neutrino, options) => {
         ],
         'no-new': 'off',
 
-        'no-console': process.env.NODE_ENV === 'development' ? 'off' : 'error',
         'prefer-const': 'error',
         'comma-dangle': ['error', 'always-multiline'],
       },

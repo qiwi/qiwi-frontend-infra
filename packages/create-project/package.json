@@ -13,6 +13,8 @@
     "commands"
   ],
   "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/create-project",
+  "homepage": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/create-project#readme",
+  "bugs": "https://github.com/qiwi/qiwi-frontend-infra/issues",
   "author": "Oleg Orlov <o.orlov@qiwi.com>",
   "license": "MIT",
   "keywords": [

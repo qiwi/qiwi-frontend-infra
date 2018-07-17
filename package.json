@@ -20,8 +20,8 @@
     "random": "node -e \"process.stdout.write(require('crypto').randomBytes(8).toString('hex'))\"",
     "link:all": "lerna exec yarn link",
     "lint": "neutrino lint",
-    "release": "lerna publish --force-publish=*",
-    "release:preview": "lerna publish --force-publish=* --skip-git --skip-npm",
+    "release": "lerna publish",
+    "release:preview": "lerna publish --skip-git --skip-npm",
     "test": "ava --fail-fast packages/*/test",
     "validate:eslintrc": "eslint --no-eslintrc --print-config . -c ./.eslintrc.js > /dev/null",
     "version": "[[ -z \"$SKIP_CHANGELOG\" ]] || yarn changelog --package && git add CHANGELOG.md"

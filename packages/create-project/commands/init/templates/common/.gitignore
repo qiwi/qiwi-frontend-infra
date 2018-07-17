@@ -1,12 +1,13 @@
 # Logs
 logs
-*.log
-npm-debug.log*
-lerna-debug.log
+*.log*
 
 # Build directories
-build
-lib
+/build/
+/lib/
+/dist/
+/bundle/
+/target/
 
 # Runtime data
 pids
@@ -18,26 +19,47 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
+coverage/
 .nyc_output
+flow-coverage/
 
 # node-waf configuration
 .lock-wscript
 
 # Dependency directories
-node_modules
+node_modules/
+jspm_packages/
 
-# Optional npm cache directory
+# Type definitions files
+typings/
+flow-typed/
+
+# Cache directory
+temp/
 .npm
+.eslintcache
+*.tmp
+.*cache
 
 # Optional REPL history
 .node_repl_history
 
-# Project metadata
-.idea
-/.vscode
+# Local config
+.env.local
 
-# Build output folders
-build
-dist
-target
+# Project metadata
+.idea/
+.vscode/
+.settings/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/

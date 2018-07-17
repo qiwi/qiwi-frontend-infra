@@ -1,6 +1,6 @@
 {
   "name": "@qiwi/html-webpack-template",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A template with more features than the html-webpack-template",
   "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/html-webpack-template",
   "homepage": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/html-webpack-template#readme",

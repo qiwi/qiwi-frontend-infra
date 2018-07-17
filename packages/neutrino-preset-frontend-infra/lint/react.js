@@ -16,6 +16,7 @@ module.exports = (neutrino, options) => {
       'react/jsx-first-prop-new-line': ['error', 'multiline'],
       'react/jsx-filename-extension': 'off',
       'react/jsx-no-target-blank': 'off',
+      'react/jsx-one-expression-per-line': 'off',
       'react/require-default-props': 'off',
       'react/require-extension': 'off',
       'react/self-closing-comp': 'off',

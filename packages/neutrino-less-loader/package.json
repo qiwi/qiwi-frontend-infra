@@ -21,9 +21,9 @@
   "bugs": "https://github.com/qiwi/qiwi-frontend-infra/issues",
   "license": "MIT",
   "dependencies": {
-    "@neutrinojs/style-loader": "^8.2.3",
+    "@neutrinojs/style-loader": "^8.3.0",
     "deepmerge": "^2.1.1",
-    "less": "^3.0.4",
+    "less": "^3.7.1",
     "less-loader": "^4.1.0"
   }
 }

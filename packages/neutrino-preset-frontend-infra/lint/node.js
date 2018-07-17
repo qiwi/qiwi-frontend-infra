@@ -8,7 +8,8 @@ module.exports = (neutrino, options) => {
       sourceType: 'script',
     },
     rules: {
-      'node/no-unsupported-features': 'error',
+      'node/no-unsupported-features/es-builtins': 'error',
+      'node/no-unsupported-features/es-syntax': 'error',
 
       'template-curly-spacing': ['error', 'never'],
       'prefer-arrow-callback': 'error',

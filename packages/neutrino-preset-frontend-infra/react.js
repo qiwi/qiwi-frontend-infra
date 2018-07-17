@@ -1,4 +1,6 @@
 const reactPreset = require('@neutrinojs/react')
+const htmlTemplate = require('@qiwi/html-webpack-template')
+const merge = require('deepmerge')
 
 const reactLint = require('./lint/react')
 const prettier = require('./prettier')
@@ -9,7 +11,14 @@ const localModules = require('./local-modules')
 const stage = require('./stage')
 const alias = require('./alias')
 
-module.exports = (neutrino, options = {}) => {
+module.exports = (neutrino, opts) => {
+  const defaults = {
+    html: {
+      template: htmlTemplate,
+    },
+  }
+  const options = merge(defaults, opts)
+
   neutrino.use(reactPreset, options)
   neutrino.use(reactLint, options.eslint)
   neutrino.use(prettier)

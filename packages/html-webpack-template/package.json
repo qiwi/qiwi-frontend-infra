@@ -1,0 +1,24 @@
+{
+  "name": "@qiwi/html-webpack-template",
+  "version": "1.0.2",
+  "description": "A template with more features than the html-webpack-template",
+  "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/html-webpack-template",
+  "homepage": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/html-webpack-template#readme",
+  "bugs": "https://github.com/qiwi/qiwi-frontend-infra/issues",
+  "author": "Oleg Orlov <o.orlov@qiwi.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "index.js",
+  "keywords": [
+    "webpack",
+    "template",
+    "html-webpack-plugin",
+    "index.html",
+    "index.ejs"
+  ],
+  "peerDependencies": {
+    "html-webpack-plugin": "2.x || ^3"
+  }
+}

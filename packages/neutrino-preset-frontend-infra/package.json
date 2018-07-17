@@ -2,6 +2,8 @@
   "name": "@qiwi/neutrino-preset-frontend-infra",
   "version": "1.0.2",
   "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-preset-frontend-infra",
+  "homepage": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-preset-frontend-infra#readme",
+  "bugs": "https://github.com/qiwi/qiwi-frontend-infra/issues",
   "author": "Oleg Orlov <o.orlov@qiwi.com>",
   "license": "MIT",
   "publishConfig": {
@@ -17,6 +19,7 @@
     "@neutrinojs/loader-merge": "^8.2.3",
     "@neutrinojs/node": "^8.2.3",
     "@neutrinojs/react": "^8.2.3",
+    "@qiwi/html-webpack-template": "^1.0.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "deepmerge": "^2.1.1",

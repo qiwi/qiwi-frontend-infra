@@ -1,6 +1,7 @@
+# ESLint only ignores the repo root node_modules by default.
 packages/**/node_modules/
-# Remove ignore of neutrinorc since ESLint ignores dotfiles by default
-!.neutrinorc.js
-# The templates have any lint errors fixed during project creation,
-# since we don't know which ESLint preset the user will choose.
-packages/create-project/commands/init/templates/
+
+# By using --no-eslintrc in yarn lint, eslint no longer lints the nested
+# RC files. We then negate this ignore so they are still linted, but no longer
+# used as configuration by our development lint command.
+!packages/create-project/bin/commands/init/templates/*/.eslintrc.js

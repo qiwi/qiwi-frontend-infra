@@ -2,12 +2,12 @@
   "name": "qiwi-frontend-infra",
   "private": true,
   "author": "Oleg Orlov <o.orlov@qiwi.com>",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "homepage": "https://github.com/qiwi/qiwi-frontend-infra#readme",
   "bugs": "https://github.com/qiwi/qiwi-frontend-infra/issues",
-  "repository": "qiwi/qiwi-frontend-infra",
+  "repository": "https://github.com/qiwi/qiwi-frontend-infra",
   "engines": {
-    "node": ">=8",
+    "node": "^8.10 || >=10",
     "npm": ">=5.4.0",
     "yarn": ">=1.2.1"
   },
@@ -16,21 +16,19 @@
   ],
   "scripts": {
     "changelog": "auto-changelog --commit-limit false",
-    "cnp": "NODE_ENV=test packages/create-project/bin/create-project.js $(yarn random)",
-    "random": "node -e \"process.stdout.write(require('crypto').randomBytes(8).toString('hex'))\"",
     "link:all": "lerna exec yarn link",
-    "lint": "neutrino lint",
+    "lint": "eslint --no-eslintrc --c ./.eslintrc.js --cache --report-unused-disable-directives --format codeframe --ext js,jsx \".*.js\" packages",
     "release": "lerna publish",
     "release:preview": "lerna publish --skip-git --skip-npm",
-    "test": "ava --fail-fast packages/*/test",
     "validate:eslintrc": "eslint --no-eslintrc --print-config . -c ./.eslintrc.js > /dev/null",
     "version": "[[ -z \"$SKIP_CHANGELOG\" ]] || yarn changelog --package && git add CHANGELOG.md"
   },
   "devDependencies": {
-    "auto-changelog": "^1.7.2",
-    "ava": "^0.25.0",
-    "lerna": "^2.5.1",
-    "neutrino": "^8.3.0",
-    "nyc": "^12.0.2"
+    "auto-changelog": "^1.8.1",
+    "eslint": "^5.7.0",
+    "husky": "^1.1.2",
+    "lerna": "^2.11.0",
+    "lint-staged": "^7.3.0",
+    "neutrino": "^9.0.0-beta.0"
   }
 }

@@ -1,4 +1,4 @@
-const {packages} = require('./utils')
+const {packages} = require('./matrix')
 
 const NONE = {name: 'None', value: false}
 const APPLICATION = {name: 'A web or Node.js application', value: 'application'}
@@ -11,6 +11,7 @@ const WEB_NODE_LIBRARY = {name: 'Web and/or Node.js', value: packages.WEB_NODE_L
 const REACT_COMPONENTS = {name: 'React Components', value: packages.REACT_COMPONENTS}
 const JEST = {name: 'Jest', value: packages.JEST}
 const MOCHA = {name: 'Mocha', value: packages.MOCHA}
+const QIWI_LINT_PRESET = {name: 'QIWI style rules', value: packages.QIWI_LINT_PRESET}
 
 module.exports = () => [
   {
@@ -45,5 +46,11 @@ module.exports = () => [
     type: 'list',
     message: '🤔  Would you like to add a test runner to your project?',
     choices: [JEST, MOCHA, NONE],
+  },
+  {
+    name: 'linter',
+    type: 'list',
+    message: '🤔  Would you like to add linting to your project?',
+    choices: [QIWI_LINT_PRESET, NONE]
   },
 ]

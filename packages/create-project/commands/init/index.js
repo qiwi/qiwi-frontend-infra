@@ -1,13 +1,14 @@
 const {basename, join, relative} = require('path')
-const {ensureDirSync, readJsonSync, writeJsonSync} = require('fs-extra')
+
+const {ensureDirSync, readJsonSync, writeJsonSync, pathExistsSync, removeSync} = require('fs-extra')
 const chalk = require('chalk')
 const stringify = require('javascript-stringify')
 const merge = require('deepmerge')
-const {contains, partition} = require('ramda')
 const Generator = require('yeoman-generator')
 
 const questions = require('./questions')
-const {projects, packages, isYarn} = require('./utils')
+const {packages, presets} = require('./matrix')
+const {isYarn} = require('./utils')
 
 /* eslint-disable no-underscore-dangle */
 module.exports = class Project extends Generator {
@@ -20,6 +21,30 @@ module.exports = class Project extends Generator {
     \\_____\\ \\_/__| \\/\\_/ |__|
            \\__>              
     `)
+  }
+
+  static _processDependencies(dependencies) {
+    return dependencies.sort();
+  }
+
+  _spawnSync(...args) {
+    const result = this.spawnCommandSync(...args);
+
+    if (result.error || result.status !== 0) {
+      const command = [args[0], ...args[1]].join(' ');
+
+      removeSync(this.options.directory);
+      this.log.error(
+        result.error ||
+        new Error(
+          `The command "${command}" exited unsuccessfully. Try again with the --debug flag ` +
+          'for more detailed information about the failure.'
+        )
+      );
+      process.exit(result.status || 1);
+    }
+
+    return result;
   }
 
   _getProjectMiddleware () {
@@ -41,58 +66,67 @@ module.exports = class Project extends Generator {
   }
 
   _getNeutrinorcContent () {
+    // We need to output the word __dirname literally in the file, not its
+    // evaluated value, so we string-build to ensure this is pulled at run-time
+    // and not create-time.
+    const options = '{\n  options: {\n    root: __dirname,\n  },';
     const rc = {
       use: [
-        this.data.testRunner,
-        projects[this.data.project].linter,
+        this.data.linter,
         this._getProjectMiddleware(),
+        this.data.testRunner,
       ].filter(Boolean),
     }
 
-    return `module.exports = ${stringify(rc, null, 2)};\n`
+    return `module.exports = ${options}${stringify(rc, null, 2).slice(1)};\n`;
   }
 
   _getDependencies () {
     const {dependencies, devDependencies} = [
       this.data.project,
       this.data.testRunner,
+      this.data.linter,
     ].reduce(
-      (deps, project) => merge(deps, projects[project] || {}),
+      (deps, preset) => merge(deps, presets[preset] || {}),
       {dependencies: [], devDependencies: []}
     )
 
-    if (dependencies.length && devDependencies.length) {
-      return {dependencies, devDependencies}
-    } else if (dependencies.length) {
-      return {dependencies}
-    } else if (devDependencies.length) {
-      return {devDependencies}
+    return {
+      dependencies: Project._processDependencies(dependencies),
+      devDependencies: Project._processDependencies(devDependencies)
     }
-
-    return {}
   }
 
   _initialPackageJson () {
-    const installer = isYarn ? 'yarn' : 'npm'
-    const scripts = {
-      build: `${packages.NEUTRINO} build`,
-      lint: `${packages.NEUTRINO} lint`,
+    const { project, projectType, testRunner, linter } = this.data;
+    const installer = isYarn ? 'yarn' : 'npm';
+    const scripts = { build: 'webpack --mode production' };
+    let lintDirectories = 'src';
+
+    if (projectType !== 'library') {
+      scripts.start = project === packages.NODE
+        ? 'webpack --watch --mode development'
+        : 'webpack-dev-server --mode development --open';
     }
 
-    if (this.data.projectType !== 'library') {
-      scripts.start = `${packages.NEUTRINO} start`
+    if (testRunner) {
+      if (testRunner.includes('jest')) {
+        scripts.test = 'jest';
+      } else if (testRunner.includes('mocha')) {
+        scripts.test = 'mocha --require mocha.config.js --recursive';
+      }
+
+      lintDirectories += ' test';
     }
 
-    if (this.data.testRunner) {
-      scripts.test = `${packages.NEUTRINO} test`
+    if (linter) {
+      scripts.lint = `eslint --cache --format codeframe --ext mjs,jsx,js ${lintDirectories}`;
     }
 
-    ensureDirSync(this.options.directory)
-
-    this.spawnCommandSync(installer, ['init', '--yes'], {
+    this._spawnSync(installer, ['init', '--yes'], {
       cwd: this.options.directory,
-      stdio: this.options.stdio,
-    })
+      stdio: this.options.stdio
+    });
 
     const jsonPath = join(this.options.directory, 'package.json')
     const json = readJsonSync(jsonPath)
@@ -119,7 +153,17 @@ module.exports = class Project extends Generator {
   }
 
   writing () {
-    const templates = ['common', this.data.project, this.data.testRunner].filter(Boolean)
+    if (pathExistsSync(this.options.directory)) {
+      this.log.error(
+        `The directory ${this.options.directory} already exists. ` +
+        'For safety, please use create-project with a non-existent directory.'
+      );
+      process.exit(1);
+    }
+
+    ensureDirSync(this.options.directory);
+
+    const templates = ['common', this.data.project, this.data.testRunner, this.data.linter].filter(Boolean)
 
     this._initialPackageJson()
     this.fs.write(
@@ -127,7 +171,7 @@ module.exports = class Project extends Generator {
       this._getNeutrinorcContent()
     )
     templates.forEach(template => {
-      const templateDir = template.replace(/@neutrinojs\/|@qiwi\/neutrino-preset-frontend-infra\//, '')
+      const templateDir = template.replace(/@neutrinojs\/|@qiwi\//, '')
 
       this.fs.copyTpl(
         this.templatePath(`${templateDir}/**`),
@@ -140,72 +184,69 @@ module.exports = class Project extends Generator {
   }
 
   install () {
-    const packageManager = isYarn ? 'yarn' : 'npm'
-    const install = isYarn ? 'add' : 'install'
-    const devFlag = isYarn ? '--dev' : '--save-dev'
-    const {dependencies, devDependencies} = this._getDependencies()
-    const sortedDependencies = dependencies && dependencies.sort()
-    const sortedDevDependencies = devDependencies && devDependencies.sort()
+    const packageManager = isYarn ? 'yarn' : 'npm';
+    const install = isYarn ? 'add' : 'install';
+    const devFlag = isYarn ? '--dev' : '--save-dev';
+    const { dependencies, devDependencies } = this._getDependencies();
 
     this.log('')
 
-    if (dependencies) {
-      this.log(`${chalk.green('⏳  Installing dependencies:')} ${chalk.yellow(sortedDependencies.join(', '))}`)
-      this.spawnCommandSync(
+    if (dependencies.length) {
+      this.log(`${chalk.green('⏳  Installing dependencies:')} ${chalk.yellow(dependencies.join(', '))}`);
+      this._spawnSync(
         packageManager,
         [
           install,
-          ...(this.options.registry ? ['--registry', this.options.registry] : []),
-          ...sortedDependencies,
+          ...(
+            this.options.registry
+              ? ['--registry', this.options.registry] :
+              []
+          ),
+          ...dependencies
         ],
         {
           cwd: this.options.directory,
           stdio: this.options.stdio,
-          env: process.env,
-        })
+          env: process.env
+        }
+      );
     }
 
-    if (devDependencies) {
-      if (process.env.NODE_ENV === 'test') {
-        const [local, remote] = partition(
-          contains(packages.NEUTRINO),
-          devDependencies,
-        )
-
-        if (remote.length) {
-          this.log(`${chalk.green('⏳  Installing remote devDependencies:')} ${chalk.yellow(remote.join(', '))}`)
-          this.spawnCommandSync(packageManager, [install, devFlag, ...remote], {
-            cwd: this.options.directory,
-            stdio: this.options.stdio,
-            env: process.env,
-          })
+    if (devDependencies.length) {
+      this.log(`${chalk.green('⏳  Installing devDependencies:')} ${chalk.yellow(devDependencies.join(', '))}`);
+      this._spawnSync(
+        packageManager,
+        [
+          install,
+          devFlag,
+          ...(
+            this.options.registry
+              ? ['--registry', this.options.registry] :
+              []
+          ),
+          ...devDependencies
+        ],
+        {
+          cwd: this.options.directory,
+          stdio: this.options.stdio,
+          env: process.env
         }
+      );
+    }
 
-        if (local.length) {
-          this.log(`${chalk.green('⏳  Linking local devDependencies:')} ${chalk.yellow(local.join(', '))}`)
-          this.spawnCommandSync('yarn', ['link', ...local], {
-            cwd: this.options.directory,
-            stdio: this.options.stdio,
-            env: process.env,
-          })
-        }
-      } else {
-        this.log(`${chalk.green('⏳  Installing devDependencies:')} ${chalk.yellow(sortedDevDependencies.join(', '))}`)
-        this.spawnCommandSync(
-          packageManager,
-          [
-            install,
-            devFlag,
-            ...(this.options.registry ? ['--registry', this.options.registry] : []),
-            ...sortedDevDependencies,
-          ],
-          {
-            cwd: this.options.directory,
-            stdio: this.options.stdio,
-            env: process.env,
-          }
-        )
-      }
+    if (this.data.linter) {
+      this.log(`${chalk.green('⏳  Performing one-time lint')}`);
+      this._spawnSync(packageManager,
+        isYarn
+          ? ['lint', '--fix']
+          : ['run', 'lint', '--fix'],
+        {
+          stdio: this.options.stdio === 'inherit' || !this.options.stdio
+            ? 'ignore' :
+            this.options.stdio,
+          env: process.env,
+          cwd: this.options.directory
+        });
     }
   }
 
@@ -222,8 +263,10 @@ module.exports = class Project extends Generator {
       this.log(`  • To execute tests run:  ${chalk.cyan.bold(`${isYarn ? 'yarn' : 'npm'} test`)}`)
     }
 
-    this.log(`  • To lint your project manually run:  ${chalk.cyan.bold(`${isYarn ? 'yarn' : 'npm run'} lint`)}`)
-    this.log(`    You can also fix some linting problems with:  ${chalk.cyan.bold(`${isYarn ? 'yarn' : 'npm run'} lint --fix`)}`)
+    if (this.data.linter) {
+      this.log(`  • To lint your project manually run:  ${chalk.cyan.bold(`${isYarn ? 'yarn' : 'npm run'} lint`)}`);
+      this.log(`    You can also fix some linting problems with:  ${chalk.cyan.bold(`${isYarn ? 'yarn' : 'npm run'} lint --fix`)}`);
+    }
 
     this.log('\nNow change your directory to the following to get started:')
     this.log(`  ${chalk.cyan('cd')} ${chalk.cyan(relative(process.cwd(), this.options.directory))}`)

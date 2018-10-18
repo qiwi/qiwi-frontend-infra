@@ -1,47 +1,63 @@
+const LINTING = 'linting'
 const PROJECT = 'project'
 const TESTING = 'testing'
+
 const N = 'neutrino'
-const REACT = '@qiwi/neutrino-preset-frontend-infra/react'
-const NODE = '@qiwi/neutrino-preset-frontend-infra/node'
+const REACT = '@neutrinojs/react'
 const WEB = '@neutrinojs/web'
+const NODE = '@neutrinojs/node'
 const WEB_NODE_LIBRARY = '@neutrinojs/library'
 const REACT_COMPONENTS = '@neutrinojs/react-components'
 const JEST = '@neutrinojs/jest'
 const MOCHA = '@neutrinojs/mocha'
-const QIWI_INFRA = '@qiwi/neutrino-preset-frontend-infra'
+const QIWI_LINT_PRESET = '@qiwi/neutrino-preset-qiwi-lint'
 
-const projects = {
+const WEBPACK = 'webpack@^4';
+const WEBPACK_CLI = 'webpack-cli@^3';
+const WEBPACK_DEV_SERVER = 'webpack-dev-server@^3';
+
+const presets = {
   [NODE]: {
     type: PROJECT,
-    devDependencies: [QIWI_INFRA, N],
+    devDependencies: [NODE, N, WEBPACK, WEBPACK_CLI],
   },
   [REACT]: {
     type: PROJECT,
-    dependencies: ['prop-types', 'react', 'react-dom', 'react-hot-loader'],
-    devDependencies: [QIWI_INFRA, N],
+    dependencies: ['prop-types@^15', 'react@^16', 'react-dom@^16', 'react-hot-loader@^4'],
+    devDependencies: [REACT, N, WEBPACK, WEBPACK_CLI, WEBPACK_DEV_SERVER]
   },
   [WEB_NODE_LIBRARY]: {
     type: PROJECT,
-    linter: `${QIWI_INFRA}/lint/node`,
-    devDependencies: [WEB_NODE_LIBRARY, QIWI_INFRA, N],
+    devDependencies: [WEB_NODE_LIBRARY,
+      N,
+      WEBPACK,
+      WEBPACK_CLI],
   },
   [REACT_COMPONENTS]: {
     type: PROJECT,
-    linter: `${QIWI_INFRA}/lint/react`,
-    devDependencies: [REACT_COMPONENTS, QIWI_INFRA, N, 'prop-types', 'react', 'react-dom'],
+    devDependencies: [REACT_COMPONENTS,
+      N,
+      'prop-types@^15',
+      'react@^16',
+      'react-dom@^16',
+      WEBPACK, WEBPACK_CLI, WEBPACK_DEV_SERVER],
   },
   [WEB]: {
     type: PROJECT,
-    linter: `${QIWI_INFRA}/lint/base`,
-    devDependencies: [WEB, QIWI_INFRA, N],
+    devDependencies: [WEB, N, WEBPACK, WEBPACK_CLI, WEBPACK_DEV_SERVER],
   },
   [JEST]: {
     type: TESTING,
-    devDependencies: [JEST, 'jest'],
+    devDependencies: [JEST, 'jest@^23'],
   },
   [MOCHA]: {
     type: TESTING,
-    devDependencies: [MOCHA, 'mocha'],
+    devDependencies: [MOCHA, 'mocha@^5'],
+  },
+  [QIWI_LINT_PRESET]: {
+    type: LINTING,
+    // devDependencies: [QIWI_LINT_PRESET, 'eslint@^5']
+    devDependencies: ['eslint@^5']
   },
 }
 
@@ -54,7 +70,7 @@ const packages = {
   REACT_COMPONENTS,
   JEST,
   MOCHA,
-  QIWI_INFRA,
+  QIWI_LINT_PRESET,
 }
 
-module.exports = {projects, packages}
+module.exports = {presets, packages}

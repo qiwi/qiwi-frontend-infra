@@ -1,0 +1,47 @@
+{
+  "name": "@qiwi/neutrino-preset-qiwi-lint",
+  "version": "1.1.0",
+  "description": "Neutrino preset for linting projects by QIWI",
+  "main": "index.js",
+  "keywords": [
+    "neutrino",
+    "neutrino-preset",
+    "standardjs",
+    "standard",
+    "eslint",
+    "react",
+    "prettier"
+  ],
+  "author": "Oleg Orlov <o.orlov@qiwi.com>",
+  "license": "MPL-2.0",
+  "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-preset-qiwi-lint",
+  "homepage": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-preset-qiwi-lint#readme",
+  "bugs": "https://github.com/neutrinojs/qiwi/qiwi-frontend-infra",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": "^8.10 || >=10",
+    "npm": ">=5.4.0",
+    "yarn": ">=1.2.1"
+  },
+  "dependencies": {
+    "@neutrinojs/eslint": "^9.0.0-beta.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-config-standard-react": "^7.0.2",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "prettier": "^1.14.3"
+  },
+  "peerDependencies": {
+    "eslint": "^5.0.0",
+    "neutrino": "^9.0.0"
+  }
+}

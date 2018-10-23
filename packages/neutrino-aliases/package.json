@@ -1,0 +1,28 @@
+{
+  "name": "@qiwi/neutrino-aliases",
+  "version": "1.1.0",
+  "description": "Add aliases for import",
+  "main": "index.js",
+  "keywords": [
+    "neutrino",
+    "neutrino-preset",
+    "aliases",
+    "alias"
+  ],
+  "author": "Oleg Orlov <o.orlov@qiwi.com>",
+  "license": "MPL-2.0",
+  "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-aliases",
+  "homepage": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-aliases#readme",
+  "bugs": "https://github.com/neutrinojs/qiwi/qiwi-frontend-infra",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": "^8.10 || >=10",
+    "npm": ">=5.4.0",
+    "yarn": ">=1.2.1"
+  },
+  "peerDependencies": {
+    "neutrino": "^9.0.0"
+  }
+}

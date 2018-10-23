@@ -1,6 +1,6 @@
 module.exports = (neutrino, opts) => {
   const defaults = {
-    '~': neutrino.options.source,
+    '~': neutrino.options.source
   }
   const alias = opts || defaults
 

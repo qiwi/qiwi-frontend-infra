@@ -26,6 +26,7 @@ env.run(
     directory,
     name,
     registry: cli.registry,
+    debug: !!cli.debug,
     stdio: cli.debug ? 'inherit' : 'ignore'
   },
   done

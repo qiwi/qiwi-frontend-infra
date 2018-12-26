@@ -13,7 +13,7 @@ const merge = require('deepmerge')
 const Generator = require('yeoman-generator')
 
 const questions = require('./questions')
-const { packages, presets, N_VERSION } = require('./matrix')
+const { packages, presets, neutrinoVersion } = require('./matrix')
 const { isYarn } = require('./utils')
 
 const packageManager = isYarn ? 'yarn' : 'npm'
@@ -35,26 +35,37 @@ module.exports = class Project extends Generator {
       .map(
         dependency =>
           /^(@neutrinojs|neutrino)/i.test(dependency)
-            ? `${dependency}@${N_VERSION}`
+            ? `${dependency}@^${neutrinoVersion}`
             : dependency
       )
       .sort()
   }
 
-  _spawnSync (...args) {
-    const result = this.spawnCommandSync(...args)
+  _spawnSync (command, args) {
+    const result = this.spawnCommandSync(command, args, {
+      cwd: this.options.directory,
+      stdio: this.options.stdio,
+      env: process.env
+    })
 
     if (result.error || result.status !== 0) {
-      const command = [args[0], ...args[1]].join(' ')
+      const commandString = [command, ...args].join(' ')
 
-      removeSync(this.options.directory)
-      this.log.error(
-        result.error ||
-          new Error(
-            `The command "${command}" exited unsuccessfully. Try again with the --debug flag ` +
-              'for more detailed information about the failure.'
-          )
-      )
+      if (result.error) {
+        // The child process failed to start entirely, or timed out.
+        this.log.error(result.error)
+      }
+
+      this.log.error(`The command "${commandString}" exited unsuccessfully.`)
+
+      if (!this.options.debug) {
+        this.log.error('Cleaning up the incomplete project directory.')
+        removeSync(this.options.directory)
+        this.log.error(
+          'Try again with the --debug flag for more information and to skip cleanup.'
+        )
+      }
+
       process.exit(result.status || 1)
     }
 
@@ -118,7 +129,6 @@ module.exports = class Project extends Generator {
 
   _initialPackageJson () {
     const { project, projectType, testRunner, linter } = this.data
-    const installer = isYarn ? 'yarn' : 'npm'
     const scripts = { build: 'webpack --mode production' }
     let lintDirectories = 'src'
 
@@ -143,10 +153,7 @@ module.exports = class Project extends Generator {
       scripts.lint = `eslint --cache --format codeframe --ext mjs,jsx,js ${lintDirectories}`
     }
 
-    this._spawnSync(installer, ['init', '--yes'], {
-      cwd: this.options.directory,
-      stdio: this.options.stdio
-    })
+    this._spawnSync(packageManager, ['init', '--yes'])
 
     const jsonPath = join(this.options.directory, 'package.json')
     const json = readJsonSync(jsonPath)
@@ -230,19 +237,11 @@ module.exports = class Project extends Generator {
           dependencies.join(', ')
         )}`
       )
-      this._spawnSync(
-        packageManager,
-        [
-          install,
-          ...(this.options.registry ? ['--registry', this.options.registry] : []),
-          ...dependencies
-        ],
-        {
-          cwd: this.options.directory,
-          stdio: this.options.stdio,
-          env: process.env
-        }
-      )
+      this._spawnSync(packageManager, [
+        install,
+        ...(this.options.registry ? ['--registry', this.options.registry] : []),
+        ...dependencies
+      ])
     }
 
     if (devDependencies.length) {
@@ -251,32 +250,20 @@ module.exports = class Project extends Generator {
           devDependencies.join(', ')
         )}`
       )
-      this._spawnSync(
-        packageManager,
-        [
-          install,
-          devFlag,
-          ...(this.options.registry ? ['--registry', this.options.registry] : []),
-          ...devDependencies
-        ],
-        {
-          cwd: this.options.directory,
-          stdio: this.options.stdio,
-          env: process.env
-        }
-      )
+      this._spawnSync(packageManager, [
+        install,
+        devFlag,
+        ...(this.options.registry ? ['--registry', this.options.registry] : []),
+        ...devDependencies
+      ])
     }
 
     if (this.data.linter) {
       this.log(`${chalk.green('⏳  Performing one-time lint')}`)
-      this._spawnSync(packageManager, isYarn ? ['lint', '--fix'] : ['run', 'lint', '--fix'], {
-        stdio:
-          this.options.stdio === 'inherit' || !this.options.stdio
-            ? 'ignore'
-            : this.options.stdio,
-        env: process.env,
-        cwd: this.options.directory
-      })
+      this._spawnSync(
+        packageManager,
+        isYarn ? ['lint', '--fix'] : ['run', 'lint', '--', '--fix']
+      )
     }
   }
 
@@ -293,28 +280,20 @@ module.exports = class Project extends Generator {
 
     if (this.data.projectType !== 'library') {
       this.log(
-        `  • To start your project locally run:  ${chalk.cyan.bold(
-          `${isYarn ? 'yarn' : 'npm'} start`
-        )}`
+        `  • To start your project locally run:  ${chalk.cyan.bold(`${packageManager} start`)}`
       )
     }
 
     if (this.data.testRunner) {
-      this.log(
-        `  • To execute tests run:  ${chalk.cyan.bold(`${isYarn ? 'yarn' : 'npm'} test`)}`
-      )
+      this.log(`  • To execute tests run:  ${chalk.cyan.bold(`${packageManager} test`)}`)
     }
 
     if (this.data.linter) {
+      const lintCommand = isYarn ? 'yarn lint' : 'npm run lint'
+      const fixLintCommand = isYarn ? `${lintCommand} --fix` : `${lintCommand} -- --fix`
+      this.log(`  • To lint your project manually run:  ${chalk.cyan.bold(lintCommand)}`)
       this.log(
-        `  • To lint your project manually run:  ${chalk.cyan.bold(
-          `${isYarn ? 'yarn' : 'npm run'} lint`
-        )}`
-      )
-      this.log(
-        `    You can also fix some linting problems with:  ${chalk.cyan.bold(
-          `${isYarn ? 'yarn' : 'npm run'} lint --fix`
-        )}`
+        `    You can also fix linting problems with:  ${chalk.cyan.bold(fixLintCommand)}`
       )
     }
 

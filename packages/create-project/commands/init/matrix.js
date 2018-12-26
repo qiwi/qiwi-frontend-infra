@@ -3,7 +3,7 @@ const PROJECT = 'project'
 const TESTING = 'testing'
 const TOOLS = 'tools'
 
-const N_VERSION = '^9'
+const neutrinoVersion = '9'
 const N = 'neutrino'
 const REACT = '@neutrinojs/react'
 const WEB = '@neutrinojs/web'
@@ -82,4 +82,4 @@ const packages = {
   HOOKS
 }
 
-module.exports = { presets, packages, N_VERSION }
+module.exports = { presets, packages, neutrinoVersion }

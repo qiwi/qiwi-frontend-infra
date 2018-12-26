@@ -1,41 +1,38 @@
 import React from 'react'
-import {string} from 'prop-types'
+import { string } from 'prop-types'
 
-const generateColor = () => `#${
-  (0x1000000 + ((Math.random()) * 0xffffff))
-    .toString(16)
-    .substr(1, 6)
-}`
+const generateColor = () =>
+  `#${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`
 
 export default class HelloWorld extends React.PureComponent {
   static defaultProps = {
-    initialColor: '#000',
-  };
+    initialColor: '#000'
+  }
 
   static propTypes = {
-    initialColor: string,
-  };
+    initialColor: string
+  }
 
   state = {
-    color: this.props.initialColor,
-  };
+    color: this.props.initialColor
+  }
 
-  componentWillReceiveProps ({initialColor}) {
+  componentWillReceiveProps ({ initialColor }) {
     if (initialColor !== this.props.initialColor) {
-      this.setState({color: initialColor})
+      this.setState({ color: initialColor })
     }
   }
 
   handleClick = () => {
     this.setState({
-      color: generateColor(),
+      color: generateColor()
     })
-  };
+  }
 
   render () {
     return (
       <div>
-        <h1 style={{color: this.state.color, padding: '20px'}}>Hello World!</h1>
+        <h1 style={{ color: this.state.color, padding: '20px' }}>Hello World!</h1>
         <button onClick={this.handleClick}>Change color</button>
       </div>
     )

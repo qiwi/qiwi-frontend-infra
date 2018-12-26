@@ -8,18 +8,18 @@ module.exports = (neutrino, opts = {}) => {
       ruleId: 'less',
       extract: process.env.NODE_ENV === 'production',
       loaders: [],
-      less: {},
+      less: {}
     },
     opts
   )
 
   Object.assign(options, {
-    extract: options.extract === true ? {} : options.extract,
+    extract: options.extract === true ? {} : options.extract
   })
 
   options.loaders.push({
     loader: require.resolve('less-loader'),
-    options: options.less,
+    options: options.less
   })
 
   neutrino.use(styleLoader, options)

@@ -1,13 +1,12 @@
 import React from 'react'
-import {hot} from 'react-hot-loader'
+import { hot } from 'react-hot-loader'
 
 import './App.css'
 
-@hot(module)
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
-    name: '<%= data.name %>',
-  };
+    name: '<%= data.name %>'
+  }
 
   render () {
     return (
@@ -17,3 +16,5 @@ export default class App extends React.Component {
     )
   }
 }
+
+export default hot(module)(App)

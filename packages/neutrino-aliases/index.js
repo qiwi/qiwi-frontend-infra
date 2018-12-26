@@ -4,7 +4,5 @@ module.exports = (neutrino, opts) => {
   }
   const alias = opts || defaults
 
-  Object.keys(alias).map(key =>
-    neutrino.config.resolve.alias.set(key, alias[key])
-  )
+  Object.keys(alias).map(key => neutrino.config.resolve.alias.set(key, alias[key]))
 }

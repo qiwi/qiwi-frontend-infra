@@ -4,7 +4,7 @@ const lint = require('./base')
 module.exports = (neutrino, options) => {
   neutrino.use(lint, {
     baseConfig: {
-      extends: ['airbnb/rules/react.js', 'airbnb/rules/react-a11y.js'],
+      extends: ['airbnb/rules/react.js', 'airbnb/rules/react-a11y.js']
     },
     envs: ['browser', 'worker', 'serviceworker'],
     rules: {
@@ -26,11 +26,11 @@ module.exports = (neutrino, options) => {
         'error',
         {
           components: ['Link'],
-          specialLink: ['to'],
-        },
+          specialLink: ['to']
+        }
       ],
-      'jsx-a11y/click-events-have-key-events': 'off',
-    },
+      'jsx-a11y/click-events-have-key-events': 'off'
+    }
   })
 
   if (options) {

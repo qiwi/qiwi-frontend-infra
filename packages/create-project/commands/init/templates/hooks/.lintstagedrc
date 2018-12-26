@@ -1,0 +1,5 @@
+{
+  "*.js": [
+    <% if (data.packageManager == 'yarn') { %>yarn lint<% } else { %>npm run lint<% } %>
+  ]
+}

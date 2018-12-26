@@ -6,7 +6,7 @@ module.exports = (neutrino, options) => {
     eslint: {
       emitWarning: process.env.NODE_ENV === 'development',
       baseConfig: {
-        extends: ['standard'],
+        extends: ['standard']
       },
       plugins: ['security', 'node'],
       rules: {
@@ -29,7 +29,7 @@ module.exports = (neutrino, options) => {
         'node/no-missing-require': 'error',
 
         // import plugin
-        'import/order': ['error', {'newlines-between': 'ignore'}],
+        'import/order': ['error', { 'newlines-between': 'ignore' }],
 
         'nonblock-statement-body-position': 'error',
         'computed-property-spacing': ['error', 'never'],
@@ -41,12 +41,12 @@ module.exports = (neutrino, options) => {
         'no-nested-ternary': 'error',
         'block-scoped-var': 'error',
         'global-require': 'error',
-        'no-unused-vars': ['error', {vars: 'all', args: 'after-used'}],
+        'no-unused-vars': ['error', { vars: 'all', args: 'after-used' }],
         'getter-return': 'error',
         'for-direction': 'error',
         'no-lonely-if': 'error',
         'valid-jsdoc': 'error',
-        'func-style': ['error', 'declaration', {allowArrowFunctions: true}],
+        'func-style': ['error', 'declaration', { allowArrowFunctions: true }],
         'no-shadow': 'error',
         'max-len': [
           'error',
@@ -56,15 +56,15 @@ module.exports = (neutrino, options) => {
             ignoreUrls: true,
             ignoreComments: false,
             ignoreStrings: true,
-            ignoreTemplateLiterals: true,
-          },
+            ignoreTemplateLiterals: true
+          }
         ],
         'no-new': 'off',
 
         'prefer-const': 'error',
-        'comma-dangle': ['error', 'always-multiline'],
-      },
-    },
+        'comma-dangle': ['error', 'always-multiline']
+      }
+    }
   })
 
   if (options) {

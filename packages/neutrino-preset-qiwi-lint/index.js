@@ -10,9 +10,9 @@ module.exports = (neutrino, { eslint = {}, ...opts } = {}) => {
       baseConfig: eslintMerge(
         {
           extends: [
-            require.resolve('eslint-config-standard'),
-            require.resolve('eslint-config-prettier'),
-            require.resolve('eslint-config-prettier/standard')
+            require.resolve('eslint-config-standard')
+            // require.resolve('eslint-config-prettier'),
+            // require.resolve('eslint-config-prettier/standard')
           ],
           // Unfortunately we can't `require.resolve('eslint-plugin-standard')` due to:
           // https://github.com/eslint/eslint/issues/6237
@@ -24,7 +24,7 @@ module.exports = (neutrino, { eslint = {}, ...opts } = {}) => {
             'new-cap': 'off',
             'no-invalid-this': 'off',
             'object-curly-spacing': 'off',
-            'semi': 'off',
+            semi: 'off',
             'no-unused-expressions': 'off',
             // Ensure the replacement rules use the options set by eslint-config-standard rather than ESLint defaults.
             'babel/new-cap': standardRules['new-cap'],
@@ -36,7 +36,7 @@ module.exports = (neutrino, { eslint = {}, ...opts } = {}) => {
             'babel/semi': standardRules.semi,
             'babel/no-unused-expressions': standardRules['no-unused-expressions'],
             // Add prettier
-            'prettier/prettier': 'error',
+            'prettier/prettier': ['error', { printWidth: 95, semi: false, singleQuote: true }],
             // Node plugin
             'node/no-unpublished-require': 'error',
             'node/no-extraneous-require': 'error',
@@ -55,6 +55,5 @@ module.exports = (neutrino, { eslint = {}, ...opts } = {}) => {
         eslint.baseConfig || {}
       )
     }
-  }
-  )
+  })
 }

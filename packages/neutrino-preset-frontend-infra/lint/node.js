@@ -5,7 +5,7 @@ module.exports = (neutrino, options) => {
   neutrino.use(lint, {
     envs: ['node'],
     parserOptions: {
-      sourceType: 'script',
+      sourceType: 'script'
     },
     rules: {
       'node/no-unsupported-features/es-builtins': 'error',
@@ -23,8 +23,8 @@ module.exports = (neutrino, options) => {
       'arrow-spacing': 'error',
       'arrow-parens': ['error', 'as-needed'],
       'prefer-const': 'error',
-      'no-var': 'error',
-    },
+      'no-var': 'error'
+    }
   })
 
   if (options) {

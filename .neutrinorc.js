@@ -3,6 +3,13 @@ module.exports = {
     root: __dirname
   },
   use: [
-    ['./packages/neutrino-preset-qiwi-lint/index.js'],
-  ],
+    [
+      './packages/neutrino-preset-qiwi-lint',
+      {
+        eslint: {
+          envs: ['browser', 'jest', 'mocha', 'node']
+        }
+      }
+    ]
+  ]
 }

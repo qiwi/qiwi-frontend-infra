@@ -6,7 +6,7 @@
   "homepage": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/html-webpack-template#readme",
   "bugs": "https://github.com/qiwi/qiwi-frontend-infra/issues",
   "author": "Oleg Orlov <o.orlov@qiwi.com>",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -16,7 +16,8 @@
     "template",
     "html-webpack-plugin",
     "index.html",
-    "index.ejs"
+    "index.ejs",
+    "qiwi"
   ],
   "peerDependencies": {
     "html-webpack-plugin": "2.x || ^3"

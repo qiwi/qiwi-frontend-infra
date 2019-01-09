@@ -46,9 +46,6 @@ htmlWebpackPlugin.options.scripts = htmlWebpackPlugin.options.scripts || []
       } else { %>
     <link href="<%= htmlWebpackPlugin.files.css[key] %>" rel="stylesheet" /><%
       } %><%
-    } %><%
-    if (htmlWebpackPlugin.options.headHtmlSnippet) { %>
-    <%= htmlWebpackPlugin.options.headHtmlSnippet %><%
     } %>
     <script type="text/javascript">
       var elements = Array.prototype.slice.call(document.getElementsByClassName("no-js"), 0)
@@ -201,6 +198,10 @@ htmlWebpackPlugin.options.scripts = htmlWebpackPlugin.options.scripts || []
         display: block
       }
     </style>
+    <%
+    if (htmlWebpackPlugin.options.headHtmlSnippet) { %>
+    <%= htmlWebpackPlugin.options.headHtmlSnippet %><%
+    } %>
   </head>
   <body><%
     if (htmlWebpackPlugin.options.unsupportedBrowser) { %>

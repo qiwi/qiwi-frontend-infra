@@ -1,8 +1,5 @@
-const eslint = require('@neutrinojs/eslint')
-const loaderMerge = require('@neutrinojs/loader-merge')
-
 module.exports = (neutrino, options) => {
-  neutrino.use(eslint, {
+  neutrino.use(null, {
     eslint: {
       emitWarning: process.env.NODE_ENV === 'development',
       baseConfig: {
@@ -66,10 +63,6 @@ module.exports = (neutrino, options) => {
       }
     }
   })
-
-  if (options) {
-    neutrino.use(loaderMerge('lint', 'eslint'), options)
-  }
 }
 
 // TODO: add lint for test

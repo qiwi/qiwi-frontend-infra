@@ -1,5 +1,4 @@
 const { packages } = require('./matrix')
-
 const NONE = { name: 'None', value: false }
 const APPLICATION = { name: 'A web or Node.js application', value: 'application' }
 const LIBRARY = { name: 'A library', value: 'library' }

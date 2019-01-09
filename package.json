@@ -15,16 +15,16 @@
     "packages/*"
   ],
   "scripts": {
-    "changelog": "auto-changelog --commit-limit false",
+    "changelog": "auto-changelog --package && git add CHANGELOG.md",
     "link:all": "lerna exec yarn link",
-    "lint": "eslint --no-eslintrc --c ./.eslintrc.js --cache --report-unused-disable-directives --format codeframe --ext js,jsx \".*.js\" packages",
+    "lint": "eslint --no-eslintrc --c ./.eslintrc.js --cache --format codeframe --ext js,jsx \".*.js\" packages",
     "release": "lerna publish",
     "release:preview": "lerna publish --skip-git --skip-npm",
-    "validate:eslintrc": "eslint --no-eslintrc --print-config . -c ./.eslintrc.js > /dev/null",
-    "version": "[[ -z \"$SKIP_CHANGELOG\" ]] || yarn changelog --package && git add CHANGELOG.md",
-    "eslint-check": "eslint --no-eslintrc --c ./.eslintrc.js --print-config packages/create-project/commands/init/templates | eslint-config-prettier-check"
+    "validate:eslintrc": "eslint --no-eslintrc --c ./.eslintrc.js --print-config . > /dev/null",
+    "validate:prettier": "eslint --no-eslintrc --c ./.eslintrc.js --print-config . | eslint-config-prettier-check",
+    "test": "yarn validate:eslintrc && yarn validate:prettier"
   },
-  "devDependencies": {
+  "dependencies": {
     "auto-changelog": "^1.8.1",
     "eslint": "^5.12.0",
     "husky": "^1.1.2",

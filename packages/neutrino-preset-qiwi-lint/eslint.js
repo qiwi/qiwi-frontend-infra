@@ -2,9 +2,11 @@ const { rules: standardRules } = require('eslint-config-standard')
 
 module.exports = () => ({
   eslint: {
+    reportUnusedDisableDirectives: 'error',
     baseConfig: {
       extends: [
         require.resolve('eslint-config-standard'),
+
         require.resolve('eslint-config-prettier'),
         require.resolve('eslint-config-prettier/standard')
       ],
@@ -54,7 +56,7 @@ module.exports = () => ({
         'babel/no-unused-expressions': standardRules['no-unused-expressions'],
         // Add prettier
         'prettier/prettier': [
-          'off',
+          'error',
           {
             printWidth: 95,
             tabWidth: 2,

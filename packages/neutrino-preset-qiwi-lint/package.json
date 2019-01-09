@@ -17,12 +17,12 @@
   "license": "MPL-2.0",
   "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-preset-qiwi-lint",
   "homepage": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-preset-qiwi-lint#readme",
-  "bugs": "https://github.com/neutrinojs/qiwi/qiwi-frontend-infra",
+  "bugs": "https://github.com/neutrinojs/qiwi/qiwi-frontend-infra/issues",
   "publishConfig": {
     "access": "public"
   },
   "engines": {
-    "node": ">=10",
+    "node": "^8.10 || >=10",
     "npm": ">=5.4.0",
     "yarn": ">=1.2.1"
   },

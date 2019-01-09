@@ -3,7 +3,6 @@
 const { basename, isAbsolute, join, resolve } = require('path')
 const yargs = require('yargs')
 const { createEnv } = require('yeoman-environment')
-
 const env = createEnv()
 const done = exitCode => process.exit(exitCode || 0)
 const dir = resolve(__dirname, '../commands/init')

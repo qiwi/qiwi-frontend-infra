@@ -2,7 +2,6 @@ const LINTING = 'linting'
 const PROJECT = 'project'
 const TESTING = 'testing'
 const TOOLS = 'tools'
-
 const neutrinoVersion = '9'
 const N = 'neutrino'
 const REACT = '@neutrinojs/react'
@@ -14,11 +13,9 @@ const JEST = '@neutrinojs/jest'
 const MOCHA = '@neutrinojs/mocha'
 const QIWI_LINT_PRESET = '@qiwi/neutrino-preset-qiwi-lint'
 const HOOKS = 'hooks'
-
 const WEBPACK = 'webpack@^4'
 const WEBPACK_CLI = 'webpack-cli@^3'
 const WEBPACK_DEV_SERVER = 'webpack-dev-server@^3'
-
 const presets = {
   [NODE]: {
     type: PROJECT,
@@ -68,7 +65,6 @@ const presets = {
     devDependencies: ['husky@^1', 'lint-staged@^7']
   }
 }
-
 const packages = {
   NEUTRINO: N,
   REACT,

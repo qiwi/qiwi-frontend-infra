@@ -1,4 +1,3 @@
-const loaderMerge = require('@neutrinojs/loader-merge')
 const lint = require('./base')
 
 module.exports = (neutrino, options) => {
@@ -32,8 +31,4 @@ module.exports = (neutrino, options) => {
       'jsx-a11y/click-events-have-key-events': 'off'
     }
   })
-
-  if (options) {
-    neutrino.use(loaderMerge('lint', 'eslint'), options)
-  }
 }

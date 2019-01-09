@@ -1,5 +1,4 @@
 const { basename, join, relative } = require('path')
-
 const {
   ensureDirSync,
   readJsonSync,
@@ -11,15 +10,13 @@ const chalk = require('chalk')
 const stringify = require('javascript-stringify')
 const merge = require('deepmerge')
 const Generator = require('yeoman-generator')
-
 const questions = require('./questions')
 const { packages, presets, neutrinoVersion } = require('./matrix')
 const { isYarn } = require('./utils')
-
 const packageManager = isYarn ? 'yarn' : 'npm'
 
 module.exports = class Project extends Generator {
-  static _logo () {
+  static _logo() {
     return chalk.keyword('orange').bold(`
     ________  .__        .__
     \\_____  \\ |__|_  _  _|__|
@@ -30,18 +27,17 @@ module.exports = class Project extends Generator {
     `)
   }
 
-  static _processDependencies (dependencies) {
+  static _processDependencies(dependencies) {
     return dependencies
-      .map(
-        dependency =>
-          /^(@neutrinojs|neutrino)/i.test(dependency)
-            ? `${dependency}@^${neutrinoVersion}`
-            : dependency
+      .map(dependency =>
+        /^(@neutrinojs|neutrino)/i.test(dependency)
+          ? `${dependency}@^${neutrinoVersion}`
+          : dependency
       )
       .sort()
   }
 
-  _spawnSync (command, args) {
+  _spawnSync(command, args) {
     const result = this.spawnCommandSync(command, args, {
       cwd: this.options.directory,
       stdio: this.options.stdio,
@@ -72,7 +68,7 @@ module.exports = class Project extends Generator {
     return result
   }
 
-  _getProjectMiddleware () {
+  _getProjectMiddleware() {
     const { projectType, project } = this.data
 
     if (projectType === 'application' && project !== packages.NODE) {
@@ -96,7 +92,7 @@ module.exports = class Project extends Generator {
     return project
   }
 
-  _getNeutrinorcContent () {
+  _getNeutrinorcContent() {
     // We need to output the word __dirname literally in the file, not its
     // evaluated value, so we string-build to ensure this is pulled at run-time
     // and not create-time.
@@ -110,7 +106,7 @@ module.exports = class Project extends Generator {
     return `module.exports = ${options}${stringify(rc, null, 2).slice(1)};\n`
   }
 
-  _getDependencies () {
+  _getDependencies() {
     const { dependencies, devDependencies } = [
       this.data.project,
       this.data.testRunner,
@@ -127,7 +123,7 @@ module.exports = class Project extends Generator {
     }
   }
 
-  _initialPackageJson () {
+  _initialPackageJson() {
     const { project, projectType, testRunner, linter } = this.data
     const scripts = { build: 'webpack --mode production' }
     let lintDirectories = 'src'
@@ -165,7 +161,7 @@ module.exports = class Project extends Generator {
     )
   }
 
-  prompting () {
+  prompting() {
     const done = this.async()
 
     this.log(Project._logo())
@@ -190,7 +186,7 @@ module.exports = class Project extends Generator {
       })
   }
 
-  writing () {
+  writing() {
     if (pathExistsSync(this.options.directory)) {
       this.log.error(
         `The directory ${this.options.directory} already exists. ` +
@@ -224,7 +220,7 @@ module.exports = class Project extends Generator {
     })
   }
 
-  install () {
+  install() {
     const install = isYarn ? 'add' : 'install'
     const devFlag = isYarn ? '--dev' : '--save-dev'
     const { dependencies, devDependencies } = this._getDependencies()
@@ -267,7 +263,7 @@ module.exports = class Project extends Generator {
     }
   }
 
-  end () {
+  end() {
     this.log(`\n${chalk.green('Hooray, I successfully created your project!')}`)
     this.log(
       `\nI have added a few ${isYarn ? 'yarn' : 'npm'} scripts to help you get started:`
@@ -291,6 +287,7 @@ module.exports = class Project extends Generator {
     if (this.data.linter) {
       const lintCommand = isYarn ? 'yarn lint' : 'npm run lint'
       const fixLintCommand = isYarn ? `${lintCommand} --fix` : `${lintCommand} -- --fix`
+
       this.log(`  • To lint your project manually run:  ${chalk.cyan.bold(lintCommand)}`)
       this.log(
         `    You can also fix linting problems with:  ${chalk.cyan.bold(fixLintCommand)}`

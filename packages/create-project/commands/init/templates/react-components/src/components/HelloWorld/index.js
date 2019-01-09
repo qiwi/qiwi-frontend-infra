@@ -17,7 +17,7 @@ export default class HelloWorld extends React.PureComponent {
     color: this.props.initialColor
   }
 
-  componentWillReceiveProps ({ initialColor }) {
+  componentWillReceiveProps({ initialColor }) {
     if (initialColor !== this.props.initialColor) {
       this.setState({ color: initialColor })
     }
@@ -29,7 +29,7 @@ export default class HelloWorld extends React.PureComponent {
     })
   }
 
-  render () {
+  render() {
     return (
       <div>
         <h1 style={{ color: this.state.color, padding: '20px' }}>Hello World!</h1>

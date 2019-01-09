@@ -8,7 +8,7 @@ class App extends React.Component {
     name: '<%= data.name %>'
   }
 
-  render () {
+  render() {
     return (
       <div className="App">
         <h1>Welcome to {this.state.name}</h1>

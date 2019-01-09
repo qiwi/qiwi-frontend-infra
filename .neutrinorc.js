@@ -4,10 +4,10 @@ module.exports = {
   },
   use: [
     [
-      './packages/neutrino-preset-qiwi-lint',
+      './packages/neutrino-preset-qiwi-lint/node',
       {
         eslint: {
-          envs: ['browser', 'jest', 'mocha', 'node']
+          envs: ['jest']
         }
       }
     ]

@@ -10,7 +10,8 @@
     "standard",
     "eslint",
     "react",
-    "prettier"
+    "prettier",
+    "qiwi"
   ],
   "author": "Oleg Orlov <o.orlov@qiwi.com>",
   "license": "MPL-2.0",
@@ -21,27 +22,30 @@
     "access": "public"
   },
   "engines": {
-    "node": "^8.10 || >=10",
+    "node": ">=10",
     "npm": ">=5.4.0",
     "yarn": ">=1.2.1"
   },
   "dependencies": {
-    "@neutrinojs/eslint": "^9.0.0-beta.0",
-    "eslint-config-prettier": "^3.1.0",
+    "@neutrinojs/eslint": "^9.0.0-rc.0",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-config-standard-react": "^7.0.2",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-node": "^7.0.1",
-    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-react": "^7.12.3",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-standard": "^4.0.0",
-    "prettier": "^1.14.3"
+    "prettier": "^1.15.3"
   },
   "peerDependencies": {
     "eslint": "^5.0.0",
     "neutrino": "^9.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0"
   }
 }

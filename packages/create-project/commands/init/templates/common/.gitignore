@@ -1,13 +1,14 @@
 # Logs
-logs
+logs/
+log/
 *.log*
 
 # Build directories
-/build/
-/lib/
-/dist/
-/bundle/
-/target/
+build/
+lib/
+dist/
+bundle/
+target/
 
 # Runtime data
 pids
@@ -20,8 +21,8 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage/
-.nyc_output
 flow-coverage/
+.nyc_output
 
 # node-waf configuration
 .lock-wscript
@@ -29,6 +30,8 @@ flow-coverage/
 # Dependency directories
 node_modules/
 jspm_packages/
+.pnp/
+.pnp.js
 
 # Type definitions files
 typings/

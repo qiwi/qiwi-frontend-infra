@@ -1,11 +1,11 @@
 {
-  "name": "qiwi-frontend-infra",
+  "name": "qiwi-neutrino-presets",
   "private": true,
   "author": "Oleg Orlov <o.orlov@qiwi.com>",
   "license": "MPL-2.0",
-  "homepage": "https://github.com/qiwi/qiwi-frontend-infra#readme",
-  "bugs": "https://github.com/qiwi/qiwi-frontend-infra/issues",
-  "repository": "https://github.com/qiwi/qiwi-frontend-infra",
+  "homepage": "https://github.com/qiwi/neutrino-presets#readme",
+  "bugs": "https://github.com/qiwi/neutrino-presets/issues",
+  "repository": "https://github.com/qiwi/neutrino-presets",
   "engines": {
     "node": "^8.10 || >=10",
     "npm": ">=5.4.0",
@@ -15,14 +15,15 @@
     "packages/*"
   ],
   "scripts": {
-    "changelog": "auto-changelog --package && git add CHANGELOG.md",
+    "changelog": "auto-changelog --package",
     "link:all": "lerna exec yarn link",
     "lint": "eslint --no-eslintrc --c ./.eslintrc.js --cache --format codeframe --ext js,jsx \".*.js\" packages",
     "release": "lerna publish",
-    "release:preview": "lerna publish --skip-git --skip-npm",
+    "release:preview": "lerna version --no-git-tag-version --no-push",
     "validate:eslintrc": "eslint --no-eslintrc --c ./.eslintrc.js --print-config . > /dev/null",
     "validate:prettier": "eslint --no-eslintrc --c ./.eslintrc.js --print-config . | eslint-config-prettier-check",
-    "test": "yarn validate:eslintrc && yarn validate:prettier"
+    "test": "yarn validate:eslintrc && yarn validate:prettier",
+    "version": "[[ -z \"$SKIP_CHANGELOG\" ]] || yarn changelog && git add CHANGELOG.md"
   },
   "dependencies": {
     "auto-changelog": "^1.10.3",

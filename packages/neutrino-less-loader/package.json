@@ -17,9 +17,9 @@
     "access": "public"
   },
   "author": "Oleg Orlov <o.orlov@qiwi.com>",
-  "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-less-loader",
-  "homepage": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-less-loader#readme",
-  "bugs": "https://github.com/qiwi/qiwi-frontend-infra/issues",
+  "repository": "https://github.com/qiwi/neutrino-presets/tree/master/packages/neutrino-less-loader",
+  "homepage": "https://github.com/qiwi/neutrino-presets/tree/master/packages/neutrino-less-loader#readme",
+  "bugs": "https://github.com/qiwi/neutrino-presets/issues",
   "license": "MPL-2.0",
   "dependencies": {
     "@neutrinojs/style-loader": "^9.0.0-rc.0",

@@ -57,12 +57,11 @@ const presets = {
   },
   [QIWI_LINT_PRESET]: {
     type: LINTING,
-    // devDependencies: [QIWI_LINT_PRESET, 'eslint@^5']
-    devDependencies: ['eslint@^5']
+    devDependencies: [QIWI_LINT_PRESET, 'eslint@^5']
   },
   [HOOKS]: {
     type: TOOLS,
-    devDependencies: ['husky@^1', 'lint-staged@^7']
+    devDependencies: ['husky@^1', 'lint-staged@^8']
   }
 }
 const packages = {

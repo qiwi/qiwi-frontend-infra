@@ -68,6 +68,16 @@ module.exports = class Project extends Generator {
     return result
   }
 
+  _getLinterPreset() {
+    const { project, linter } = this.data
+
+    if ([packages.REACT, packages.REACT_COMPONENTS].includes(project)) {
+      return `${linter}/react`
+    }
+
+    return `${linter}/node`
+  }
+
   _getProjectMiddleware() {
     const { projectType, project } = this.data
 
@@ -98,9 +108,11 @@ module.exports = class Project extends Generator {
     // and not create-time.
     const options = '{\n  options: {\n    root: __dirname,\n  },'
     const rc = {
-      use: [this.data.linter, this._getProjectMiddleware(), this.data.testRunner].filter(
-        Boolean
-      )
+      use: [
+        this._getLinterPreset(),
+        this._getProjectMiddleware(),
+        this.data.testRunner
+      ].filter(Boolean)
     }
 
     return `module.exports = ${options}${stringify(rc, null, 2).slice(1)};\n`

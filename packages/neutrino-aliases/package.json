@@ -7,13 +7,14 @@
     "neutrino",
     "neutrino-preset",
     "aliases",
-    "alias"
+    "alias",
+    "qiwi"
   ],
   "author": "Oleg Orlov <o.orlov@qiwi.com>",
   "license": "MPL-2.0",
   "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-aliases",
   "homepage": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-aliases#readme",
-  "bugs": "https://github.com/neutrinojs/qiwi/qiwi-frontend-infra",
+  "bugs": "https://github.com/neutrinojs/qiwi/qiwi-frontend-infra/issues",
   "publishConfig": {
     "access": "public"
   },

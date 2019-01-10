@@ -89,3 +89,25 @@ module.exports = () => ({
     }
   }
 })
+
+// TODO: add lint for test
+// [{
+//   files: ['test/*.js'],
+//   rules: {
+//     'node/no-unpublished-require': 'off'
+//   }
+// },
+// {
+//   files: ['*.test.js'],
+//   rules: {
+//     'jest/valid-expect-in-promise': 'error',
+//     'jest/prefer-to-be-undefined': 'error',
+//     'jest/prefer-to-have-length': 'error',
+//     'jest/no-identical-title': 'error',
+//     'jest/consistent-test-it': ['error', {fn: 'it'}],
+//     'jest/no-disabled-tests': 'error',
+//     'jest/prefer-to-be-null': 'error',
+//     'jest/no-focused-tests': 'error',
+//     'jest/valid-expect': 'error'
+//   }
+// }]

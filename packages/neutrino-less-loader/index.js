@@ -1,3 +1,4 @@
+const { DuplicateRuleError } = require('neutrino/errors')
 const styleLoader = require('@neutrinojs/style-loader')
 const merge = require('deepmerge')
 
@@ -6,20 +7,20 @@ module.exports = (neutrino, opts = {}) => {
     {
       test: neutrino.regexFromExtensions(['less']),
       ruleId: 'less',
-      extract: process.env.NODE_ENV === 'production',
       loaders: [],
       less: {}
     },
     opts
   )
 
-  Object.assign(options, {
-    extract: options.extract === true ? {} : options.extract
-  })
+  if (neutrino.config.module.rules.has(options.ruleId)) {
+    throw new DuplicateRuleError('@qiwi/neutrino-less-loader', options.ruleId)
+  }
 
   options.loaders.push({
     loader: require.resolve('less-loader'),
-    options: options.less
+    options: options.less,
+    useId: 'less'
   })
 
   neutrino.use(styleLoader, options)

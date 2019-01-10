@@ -10,7 +10,8 @@
     "less",
     "style",
     "css",
-    "stylesheet"
+    "stylesheet",
+    "qiwi"
   ],
   "publishConfig": {
     "access": "public"
@@ -19,11 +20,15 @@
   "repository": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-less-loader",
   "homepage": "https://github.com/qiwi/qiwi-frontend-infra/tree/master/packages/neutrino-less-loader#readme",
   "bugs": "https://github.com/qiwi/qiwi-frontend-infra/issues",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "dependencies": {
     "@neutrinojs/style-loader": "^9.0.0-rc.0",
     "deepmerge": "^3.0.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0"
+  },
+  "peerDependencies": {
+    "neutrino": "^9.0.0-0",
+    "webpack": "^4.0.0"
   }
 }
